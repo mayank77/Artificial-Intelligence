@@ -5,6 +5,14 @@ Created on Fri Jan 27 11:22:27 2017
 @author: mayank
 """
 
+"""
+8-puzzle is a game where a random conﬁguration in a 3x3 matrix comprising of up-to 8 tiles is supposed
+to achieve a conﬁguration of 1. . .n where n is the number of tiles in the game and the conﬁguration is
+consecutive when read top to bottom and left to right. For instance, for a 8-tile ideal conﬁguration would be
+1,2,3,4,5,6,7,8,0 where 0 represents a gap. Similarly, for a 7-tile ideal conﬁguration would be 1,2,3,4,5,6,7,0,0.
+The language used is Python.
+"""
+
 import math
 import timeit 
 t = timeit.Timer(stmt="lst = ['c'] * 100")  
