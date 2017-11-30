@@ -1,0 +1,16 @@
+REFER sequentialdecisionworld.png
+
+Model a grid navigation problem as a Markov Decision Process
+Implement the Value Iteration algorithm, and test it with the navigation problem.
+Implement the Q-learning algorithm, and test it with the grid navigation problem (the algorithm only knows about the state-space and the actions, not about the transition probabilities and rewards in the MDP.)
+The grid is the one familiar from Exercise 6, with a small modification. All move actions in the NE corner cell result in teleporting the agent to the START-cell in the SW corner with probability 1.0. Reaching the cells marked with +1 and -1 have the respective immediate rewards, and all other cells have immediate reward 0. There are 4 move actions, for North, South, East and West, with which the desired move is achieved with probability 0.8 (if move in that direction is possible), and otherwise with probability 0.1 one ends up to the left, and with probability 0.1 to the right to a position 90 degrees from the desired direction (as shown in the figure below.) If move to some of these directions is not possible, the move action has no effect.
+
+First, implement Value Iteration and calculate the values of all states (cells) with sufficient accuracy.
+
+Then implement the Q-learning algorithm to investigate its convergence, that is, how many steps you have to run the algorithm to learn Q-values with which the best action for each cell/state is  close to the values of the corresponding MDP (as calculated by the Value Iteration algorithm.) Consider the values to be "close" if they differ by no more than 0.1. (You may have to experiment with this parameter, to terminate the computation in a reasonable amount of time and to get a good quality policy as a result.)
+
+The execution of the Q-learning process starts from the START-cell. For every cell/state encountered, an action is chosen using a decision rule (see next paragraph), and then your code randomly chooses one of the possible next states with this action according to the probilities of the possible successor states (you must use the random number generator to choose the successor state), and then update the Q-value of the state-action pair.
+
+For the decision rule in choosing which action to take, use the optimal Multi-Arm-Bandit rule from Lecture 9. For this you have to store the number of times each action has been taken so far in each cell/state, and the sum of the values of that action has had in s (in order to compute their average). The value of the action a in state s with successor state s' is R(s,a,s') + γ·maxa'Q(s',a') (immediate reward + highest possible future discounted rewards.)
+
+For both Value Iteration and Q-learning use discount factor γ=0.95. For Q-learning use λ=0.01.
