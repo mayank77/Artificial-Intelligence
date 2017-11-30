@@ -1,0 +1,55 @@
+//./celebes ans.ndl
+
+//Your board action doesn't keep track of the lift cabin (upper or lower) where the passenger boards, and then all exiting passengers from both cabins end up on the same floor. Please correct and re-submit. 
+
+
+type pfloor = [0..9];
+type lfloor = [1..8];
+type ufloor = [2..9];
+
+type passenger = { p1,p2,p3,p4 };
+type lift = { l1 };
+type lift1 = { l2 };
+
+decl ploc[passenger] : pfloor;
+decl boarded[passenger] : [0..2];
+decl lloc[lift] : lfloor;
+decl lloc1[lift1] : ufloor;
+
+action board(p : passenger, l : lift, f : pfloor)
+(ploc[p] = f) & (lloc[l] = f)
+=>
+boarded[p] := 1; //1 means lower lift, 2 means upper lift
+ploc[p] := 0;
+
+action board1(p : passenger, x : lift1, f : pfloor)
+(ploc[p] = f) & (lloc1[x] = f)
+=>
+boarded[p] := 2; //1 means lower lift, 2 means upper lift
+ploc[p] := 0;
+
+action depart(p : passenger, l : lift, f : pfloor)
+(boarded[p]=1) & (lloc[l] = f)
+=>
+ploc[p] := f;
+
+action depart1(p : passenger, x : lift1, f : pfloor)
+(boarded[p]=2) & (lloc1[x] = f)
+=>
+ploc[p] := f;
+
+action movelift( l : lift, x : lift1, f : lfloor)
+true
+=>
+lloc[l] := f;
+lloc1[x] := f+1;
+
+initial
+ploc[p1] := 9;
+ploc[p2] := 3;
+ploc[p3] := 4;
+ploc[p4] := 5;
+lloc[l1] := 1;
+lloc1[l2] := 2;
+
+goal (ploc[p1] = 2) & (ploc[p2] = 8) & (ploc[p3] = 9) & (ploc[p4] = 1);
